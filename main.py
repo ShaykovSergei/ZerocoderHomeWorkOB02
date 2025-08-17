@@ -1,43 +1,47 @@
 class User:
     def __init__(self, user_id, name):
-        self.__id = user_id
-        self.__name = name
-        self.__access_level = 'user'
+        self._user_id = user_id
+        self._name = name
+        self._level = 'user'
 
     def get_id(self):
-        return self.__id
+        return self._user_id
 
     def get_name(self):
-        return self.__name
+        return self._name
 
-    def get_access_level(self):
-        return self.__access_level
+    def get_level(self):
+        return self._level
+
+    def set_name(self, name):
+        self._name = name
 
 
 class Admin(User):
-    def __init__(self, admin_id, name):
-        super().__init__(admin_id, name)
-        self.__access_level = 'admin'
+    def __init__(self, user_id, name):
+        super().__init__(user_id, name)
+        self._level = 'admin'
 
-        self.__users_list = []
+    def add_user(self, user_list, user):
+        user_list.append(user)
+        print(f"Пользователь успешно добавлен в список")
+        print(user_list)
 
-    def add_user(self, new_user):
-        if isinstance(new_user, User):
-            self.__users_list.append(new_user)
-            print(f"Пользователь {new_user.get_name()} успешно добавлен.")
-        else:
-            raise TypeError("Можно добавить только экземпляр класса User")
+    def remove_user(self, user_list, user):
+        user_list.remove(user)
+        print(f"Пользователь удалён")
 
-    def remove_user(self, target_user):
-        for u in self.__users_list:
-            if u.get_id() == target_user.get_id():
-                self.__users_list.remove(u)
-                print(f"Пользователь {target_user.get_name()} удалён.")
-                break
-        else:
-            print("Пользователь не найден.")
 
-    def show_users(self):
-        print("\nСписок пользователей:")
-        for u in self.__users_list:
-            print(f"{u.get_id()} | {u.get_name()} | Доступ: {u.get_access_level()}")
+users = []
+admin = Admin('A001', 'Алексей Смирнов')
+user1 = User('U001', 'Иван Иванов')
+user2 = User('U002', 'Анна Петрова')
+
+print(user1.get_name())
+admin.add_user(users, user1)
+
+
+
+
+
+
